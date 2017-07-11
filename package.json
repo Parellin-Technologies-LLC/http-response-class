@@ -1,5 +1,5 @@
 {
-  "name": "response",
+  "name": "http-response",
   "version": "0.0.1",
   "description": "Simple http response wrapper.",
   "main": "index.js",
