@@ -1,0 +1,24 @@
+{
+  "name": "response",
+  "version": "0.0.1",
+  "description": "Simple http response wrapper.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Parellin-Technologies-LLC/response.git"
+  },
+  "keywords": [
+    "http",
+    "response",
+    "wrapper"
+  ],
+  "author": "Parellin Technologies LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Parellin-Technologies-LLC/response/issues"
+  },
+  "homepage": "https://github.com/Parellin-Technologies-LLC/response#readme"
+}
