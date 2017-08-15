@@ -2,7 +2,7 @@
 
 class Response
 {
-    constructor( statusCode, data, origin = null )
+    constructor( statusCode, data, origin = null, ...metadata )
     {
         if( typeof statusCode !== 'number' || statusCode !== +statusCode )
             throw 'Argument Error - [statusCode] must be typeof number.';
@@ -95,6 +95,9 @@ class Response
         this.data       = data;
         this.message    = this.codes[ statusCode ];
         this.origin     = origin || this.constructor.name;
+
+        if( metadata )
+            this.metadata = metadata;
     }
 
     toString()

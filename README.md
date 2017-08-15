@@ -11,7 +11,7 @@ Usage:
 
 const Response = require( 'http-response-class' );
 
-console.log( new Response( 200, 'pong', 'main process' );
+console.log( new Response( 200, 'pong', 'main process', metadata );
 ```
 
 Parameters:
@@ -19,3 +19,4 @@ Parameters:
 - `statusCode`
 - `message`
 - `origin` of the response
+- (optional) `metadata`
