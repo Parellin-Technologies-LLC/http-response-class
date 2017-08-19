@@ -102,11 +102,16 @@ class Response
 
     toString()
     {
-        return JSON.stringify( {
+        const res = {
             statusCode: this.statusCode,
             message: this.message,
             data: this.data
-        } );
+        };
+
+        if( this.metadata )
+            res.metadata = this.metadata;
+
+        return JSON.stringify( res );
     }
 
     isInformational( code )
