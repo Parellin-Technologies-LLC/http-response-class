@@ -1,4 +1,10 @@
+/** ****************************************************************************************************
+ * File: index-test.js
+ * Project: http-response-class
+ * @author Nick Soggin <iSkore@users.noreply.github.com> on 11-Jul-2017
+ *******************************************************************************************************/
 'use strict';
+// @formatter:off
 
 class Response
 {
@@ -92,11 +98,13 @@ class Response
         } );
 
         this.statusCode = statusCode;
-        this.data       = data;
-        this.message    = this.codes[ statusCode ];
-        this.origin     = origin || this.constructor.name;
+        this.data = data;
+        this.message = this.codes[ statusCode ];
 
-        if( metadata )
+        if( origin )
+            this.origin = origin;
+
+        if( metadata.length )
             this.metadata = metadata;
     }
 
