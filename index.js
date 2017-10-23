@@ -10,6 +10,9 @@ class Response
 {
     constructor( statusCode, data, origin = null, ...metadata )
     {
+        if( statusCode instanceof Response || data instanceof Response )
+            return statusCode || data;
+        
         if( typeof statusCode !== 'number' || statusCode !== +statusCode )
             throw 'Argument Error - [statusCode] must be typeof number.';
         else if( !this.isHTTPCode( statusCode ) )
@@ -107,19 +110,27 @@ class Response
         if( metadata.length )
             this.metadata = metadata;
     }
-
-    toString()
+    
+    getPacket()
     {
         const res = {
             statusCode: this.statusCode,
             message: this.message,
             data: this.data
         };
-
+    
+        if( this.origin )
+            res.origin = this.origin;
+    
         if( this.metadata )
             res.metadata = this.metadata;
-
-        return JSON.stringify( res );
+    
+        return res;
+    }
+    
+    toString()
+    {
+        return JSON.stringify( this.getPacket() );
     }
 
     isInformational( code )
