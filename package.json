@@ -1,29 +1,32 @@
 {
-  "name": "http-response-class",
-  "version": "1.0.2",
-  "description": "Simple http response wrapper.",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha",
-    "preversion": "npm test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Parellin-Technologies-LLC/response.git"
-  },
-  "keywords": [
-    "http",
-    "response",
-    "wrapper"
-  ],
-  "author": "Parellin Technologies LLC",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Parellin-Technologies-LLC/response/issues"
-  },
-  "homepage": "https://github.com/Parellin-Technologies-LLC/response#readme",
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^4.0.1"
-  }
+    "name": "http-response-class",
+    "version": "1.0.2",
+    "description": "Simple http response wrapper.",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha",
+        "preversion": "npm test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Parellin-Technologies-LLC/http-response-class.git"
+    },
+    "keywords": [
+        "http",
+        "response",
+        "wrapper"
+    ],
+    "author": "Parellin Technologies LLC  (https://parellin.com)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Parellin-Technologies-LLC/http-response-class/issues"
+    },
+    "homepage": "https://github.com/Parellin-Technologies-LLC/http-response-class#readme",
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "mocha": "^4.0.1"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org"
+    }
 }
