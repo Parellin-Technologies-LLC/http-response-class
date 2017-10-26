@@ -1,5 +1,5 @@
 /** ****************************************************************************************************
- * File: index-test.js
+ * File: index.js
  * Project: http-response-class
  * @author Nick Soggin <iSkore@users.noreply.github.com> on 11-Jul-2017
  *******************************************************************************************************/
@@ -8,7 +8,7 @@
 
 class Response
 {
-    constructor( statusCode, data, origin = null, ...metadata )
+    constructor( statusCode, data, origin, ...metadata )
     {
         if( statusCode instanceof Response )
             return statusCode;
@@ -19,9 +19,9 @@ class Response
         else if( metadata instanceof Response )
             return metadata;
         
-        if( typeof statusCode !== 'number' || statusCode !== +statusCode )
+        if( statusCode && ( typeof statusCode !== 'number' || statusCode !== +statusCode ) )
             throw 'Argument Error - [statusCode] must be typeof number.';
-        else if( !this.isHTTPCode( statusCode ) )
+        else if( statusCode && !this.isHTTPCode( statusCode ) )
             throw 'Argument Error - [statusCode] must be valid HTTP code';
         else if( this.isInformational( statusCode ) )
             this.classification = 'Informational';
@@ -194,20 +194,18 @@ class Response
         return this.codes[ code ] || this.message;
     }
     
-    static [Symbol.hasInstance]( obj )
+    get [ Symbol.toStringTag ]()
     {
-        if( obj )
-            if( obj.isHTTPCode &&
-                obj.getClassification &&
-                obj.getStatusCode &&
-                obj.getMessage &&
-                obj.getData
-            )
-                return true;
-            else
-                return false;
-        else
-            return false;
+        return this.constructor.name;
+    }
+    
+    static [ Symbol.hasInstance ]( obj )
+    {
+        return obj ? (
+            obj.hasOwnProperty( 'statusCode' ) &&
+            obj.hasOwnProperty( 'message' ) &&
+            obj.hasOwnProperty( 'data' )
+        ) : false;
     }
 }
 
