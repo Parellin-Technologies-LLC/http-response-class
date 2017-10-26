@@ -15,7 +15,9 @@ pids
 *.seed
 
 # GIT directory
-.git
+.git/
+*.git*
+*git*
 
 # nyc test coverage
 .nyc_output
