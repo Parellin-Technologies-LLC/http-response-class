@@ -16,9 +16,9 @@ class Response
             return data;
         else if( origin instanceof Response )
             return origin;
-        else if( metadata instanceof Response )
-            return metadata;
-        
+        else if( metadata instanceof Response || metadata[ 0 ] instanceof Response )
+            return metadata[ 0 ] || metadata;
+
         if( statusCode && ( typeof statusCode !== 'number' || statusCode !== +statusCode ) )
             throw 'Argument Error - [statusCode] must be typeof number.';
         else if( statusCode && !this.isHTTPCode( statusCode ) )
@@ -35,7 +35,7 @@ class Response
             this.classification = 'Server Error';
         else
             this.classification = 'Unknown';
-        
+
         Object.defineProperty( this, 'codes', {
             enumerable: false,
             configurable: false,
@@ -105,18 +105,18 @@ class Response
                 511: 'Network Authentication Required'
             }
         } );
-        
+
         this.statusCode = statusCode;
         this.data = data;
         this.message = this.codes[ statusCode ];
-        
+
         if( origin )
             this.origin = origin;
-        
+
         if( metadata.length )
             this.metadata = metadata;
     }
-    
+
     getPacket()
     {
         const res = {
@@ -124,81 +124,81 @@ class Response
             message: this.message,
             data: this.data
         };
-        
+
         if( this.origin )
             res.origin = this.origin;
-        
+
         if( this.metadata )
             res.metadata = this.metadata;
-        
+
         return res;
     }
-    
+
     toString()
     {
         return JSON.stringify( this.getPacket() );
     }
-    
+
     isInformational( code )
     {
         return /^(10[0-2])$/.test( code || this.statusCode );
     }
-    
+
     isSuccess( code )
     {
         return /^(20[0-8]|226)$/.test( code || this.statusCode );
     }
-    
+
     isRedirection( code )
     {
         return /^(30[0-8])$/.test( code || this.statusCode );
     }
-    
+
     isClientError( code )
     {
         return /^(40[0-9]|41[0-8]|42[1-6,8,9]|431|451)$/.test( code || this.statusCode );
     }
-    
+
     isServerError( code )
     {
         return /^(50[0-9]|51[0,1])$/.test( code || this.statusCode );
     }
-    
+
     isHTTPCode( code )
     {
         return /^(10[0-2])|(20[0-8]|226)|(30[0-8])|(40[0-9]|41[0-8]|42[1-6,8,9]|431|451)|(50[0-9]|51[0,1])$/.test( code || this.statusCode );
     }
-    
+
     getClassification()
     {
         return this.classification;
     }
-    
+
     getStatusCode()
     {
         return this.statusCode;
     }
-    
+
     getMessage()
     {
         return this.message;
     }
-    
+
     getData()
     {
         return this.data;
     }
-    
+
     statusText( code )
     {
         return this.codes[ code ] || this.message;
     }
-    
+
     get [ Symbol.toStringTag ]()
     {
-        return this.constructor.name;
+        return this.constructor.name || 'Response';
     }
-    
+
     static [ Symbol.hasInstance ]( obj )
     {
         return obj ? (
