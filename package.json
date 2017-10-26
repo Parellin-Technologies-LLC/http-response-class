@@ -13,8 +13,11 @@
     },
     "keywords": [
         "http",
+        "https",
         "response",
-        "wrapper"
+        "wrapper",
+        "class",
+        "express"
     ],
     "author": "Parellin Technologies LLC  (https://parellin.com)",
     "license": "MIT",
@@ -25,5 +28,8 @@
     "devDependencies": {
         "chai": "^4.1.2",
         "mocha": "^4.0.1"
-    }
+    },
+    "files": [
+        "index.js"
+    ]
 }
