@@ -11,7 +11,6 @@ const
     expect   = chai.expect,
     Response = require( '../index' ),
     obj = {
-        classification: 'Success',
         statusCode: 200,
         data: 'pong',
         message: 'OK'
@@ -21,10 +20,10 @@ describe( 'Response [http-response-class]', () => {
     const
         successful = new Response( 200, 'pong' ),
         failed     = new Response( 400, 'pong', 'tests', 'Bad Request' );
-
-    it( `[new Response( 200, 'pong' )] should return ${JSON.stringify( obj )}`,
+    
+    it( `[successful.getPacket]        should return ${JSON.stringify( obj )}`,
         () => {
-            expect( successful ).to.eql( obj );
+            expect( successful.getPacket() ).to.eql( obj );
         }
     );
 
@@ -49,6 +48,18 @@ describe( 'Response [http-response-class]', () => {
     it( `[failed.metadata]             should return have metadata`,
         () => {
             expect( failed.metadata ).to.eql( [ 'Bad Request' ] );
+        }
+    );
+    
+    it( `[Symbol.hasInstance]          should be true`,
+        () => {
+            expect( obj instanceof Response ).to.be.true;
+        }
+    );
+    
+    it( `[Symbol.toStringTag]          should return [object Response]`,
+        () => {
+            expect( Object.prototype.toString.call( new Response() ) ).to.eql( '[object Response]' );
         }
     );
 } );
