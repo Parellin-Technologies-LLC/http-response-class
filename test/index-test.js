@@ -62,4 +62,32 @@ describe( 'Response [http-response-class]', () => {
             expect( Object.prototype.toString.call( new Response() ) ).to.eql( '[object Response]' );
         }
     );
+    
+    it( `[successful.setStatusCode]    should set message to No Content`,
+        () => {
+            successful.setStatusCode( 204 );
+            expect( successful.message ).to.eql( 'No Content' );
+        }
+    );
+    
+    it( `[successful.setStatusCode]    should set code to 205`,
+        () => {
+            successful.setStatusCode( 205 );
+            expect( successful.statusCode ).to.eql( 205 );
+        }
+    );
+    
+    it( `[successful.setMessage]       should set statusCode to 425`,
+        () => {
+            successful.setMessage( 'Unordered Collection' );
+            expect( successful.statusCode ).to.eql( 425 );
+        }
+    );
+    
+    it( `[successful.setMessage]       should set message to Permanent Redirect`,
+        () => {
+            successful.setMessage( 'Permanent Redirect' );
+            expect( successful.message ).to.eql( 'Permanent Redirect' );
+        }
+    );
 } );

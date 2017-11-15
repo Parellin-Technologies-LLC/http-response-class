@@ -4,6 +4,7 @@
  * @author Nick Soggin <iSkore@users.noreply.github.com> on 11-Jul-2017
  *******************************************************************************************************/
 'use strict';
+
 // @formatter:off
 
 class Response
@@ -18,24 +19,14 @@ class Response
             return origin;
         else if( metadata instanceof Response || metadata[ 0 ] instanceof Response )
             return metadata[ 0 ] || metadata;
-
+        
         if( statusCode && ( typeof statusCode !== 'number' || statusCode !== +statusCode ) )
             throw 'Argument Error - [statusCode] must be typeof number.';
         else if( statusCode && !this.isHTTPCode( statusCode ) )
             throw 'Argument Error - [statusCode] must be valid HTTP code';
-        else if( this.isInformational( statusCode ) )
-            this.classification = 'Informational';
-        else if( this.isSuccess( statusCode ) )
-            this.classification = 'Success';
-        else if( this.isRedirection( statusCode ) )
-            this.classification = 'Redirection';
-        else if( this.isClientError( statusCode ) )
-            this.classification = 'Client Error';
-        else if( this.isServerError( statusCode ) )
-            this.classification = 'Server Error';
         else
-            this.classification = 'Unknown';
-
+            this.setClassification( statusCode );
+        
         Object.defineProperty( this, 'codes', {
             enumerable: false,
             configurable: false,
@@ -105,18 +96,29 @@ class Response
                 511: 'Network Authentication Required'
             }
         } );
-
+        
         this.statusCode = statusCode;
-        this.data = data;
-        this.message = this.codes[ statusCode ];
-
+        this.data       = data;
+        this.message    = this.codes[ statusCode ];
+        
         if( origin )
             this.origin = origin;
-
+        
         if( metadata.length )
             this.metadata = metadata;
     }
-
+    
+    getCodeFromMessage( message )
+    {
+        for( const code in this.codes ) {
+            if( this.codes.hasOwnProperty( code ) ) {
+                if( this.codes[ code ] === message ) {
+                    return +code;
+                }
+            }
+        }
+    }
+    
     getPacket()
     {
         const res = {
@@ -124,81 +126,118 @@ class Response
             message: this.message,
             data: this.data
         };
-
+        
         if( this.origin )
             res.origin = this.origin;
-
+        
         if( this.metadata )
             res.metadata = this.metadata;
-
+        
         return res;
     }
-
+    
     toString()
     {
         return JSON.stringify( this.getPacket() );
     }
-
+    
     isInformational( code )
     {
         return /^(10[0-2])$/.test( code || this.statusCode );
     }
-
+    
     isSuccess( code )
     {
         return /^(20[0-8]|226)$/.test( code || this.statusCode );
     }
-
+    
     isRedirection( code )
     {
         return /^(30[0-8])$/.test( code || this.statusCode );
     }
-
+    
     isClientError( code )
     {
         return /^(40[0-9]|41[0-8]|42[1-6,8,9]|431|451)$/.test( code || this.statusCode );
     }
-
+    
     isServerError( code )
     {
         return /^(50[0-9]|51[0,1])$/.test( code || this.statusCode );
     }
-
+    
     isHTTPCode( code )
     {
         return /^(10[0-2])|(20[0-8]|226)|(30[0-8])|(40[0-9]|41[0-8]|42[1-6,8,9]|431|451)|(50[0-9]|51[0,1])$/.test( code || this.statusCode );
     }
-
+    
     getClassification()
     {
         return this.classification;
     }
-
+    
     getStatusCode()
     {
         return this.statusCode;
     }
-
+    
+    setStatusCode( code, message )
+    {
+        if( this.isHTTPCode( code ) ) {
+            this.statusCode = code;
+            this.message    = this.statusText( code );
+        } else {
+            this.statusCode = code;
+            this.message    = message;
+        }
+        
+        this.setClassification( code );
+    }
+    
     getMessage()
     {
         return this.message;
     }
-
+    
+    setMessage( message, code )
+    {
+        code = this.getCodeFromMessage( message ) || code;
+        this.statusCode = code;
+        this.message    = message;
+        this.setClassification( code );
+    }
+    
     getData()
     {
         return this.data;
     }
-
+    
+    setClassification( code )
+    {
+        if( this.isInformational( code ) )
+            this.classification = 'Informational';
+        else if( this.isSuccess( code ) )
+            this.classification = 'Success';
+        else if( this.isRedirection( code ) )
+            this.classification = 'Redirection';
+        else if( this.isClientError( code ) )
+            this.classification = 'Client Error';
+        else if( this.isServerError( code ) )
+            this.classification = 'Server Error';
+        else
+            this.classification = 'Unknown';
+    }
+    
     statusText( code )
     {
         return this.codes[ code ] || this.message;
     }
-
+    
     get [ Symbol.toStringTag ]()
     {
         return this.constructor.name || 'Response';
     }
-
+    
     static [ Symbol.hasInstance ]( obj )
     {
         return obj ? (
