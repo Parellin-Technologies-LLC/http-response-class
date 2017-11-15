@@ -183,11 +183,11 @@ class Response
     
     setStatusCode( code, message )
     {
+        this.statusCode = code;
+        
         if( this.isHTTPCode( code ) ) {
-            this.statusCode = code;
             this.message    = this.statusText( code );
         } else {
-            this.statusCode = code;
             this.message    = message;
         }
         
