@@ -26,6 +26,11 @@ Parameters:
 100: 'Continue'
 101: 'Switching Protocols'
 102: 'Processing'
+110: 'Response is Stale'
+111: 'Revalidation Failed'
+112: 'Disconnected Operation'
+113: 'Heuristic Expiration'
+199: 'Miscellaneous Warning'
 
 200: 'OK'
 201: 'Created'
@@ -36,7 +41,9 @@ Parameters:
 206: 'Partial Content'
 207: 'Multi-Status'
 208: 'Already Reported'
+214: 'Transformation Applied'
 226: 'IM Used'
+299: 'Miscellaneous Persistent Warning'
 
 300: 'Multiple Choices'
 301: 'Moved Permanently'
@@ -90,3 +97,37 @@ Parameters:
 510: 'Not Extended'
 511: 'Network Authentication Required'
 ```
+
+CHANGELOG:
+
+- v1.1.4
+    - Added RFC7234 Warning codes:
+        - [110 - RFC7234 Section 5.5.1](https://tools.ietf.org/html/rfc7234#section-5.5.1)
+        - [111 - RFC7234 Section 5.5.2](https://tools.ietf.org/html/rfc7234#section-5.5.2)
+        - [112 - RFC7234 Section 5.5.3](https://tools.ietf.org/html/rfc7234#section-5.5.3)
+        - [113 - RFC7234 Section 5.5.4](https://tools.ietf.org/html/rfc7234#section-5.5.4)
+        - [199 - RFC7234 Section 5.5.5](https://tools.ietf.org/html/rfc7234#section-5.5.5)
+        - [214 - RFC7234 Section 5.5.6](https://tools.ietf.org/html/rfc7234#section-5.5.6)
+        - [299 - RFC7234 Section 5.5.7](https://tools.ietf.org/html/rfc7234#section-5.5.7)
+- v1.1.3/2
+    - Added response codes to documentation
+- v1.1.1
+    - added postversion command
+    - edit `setStatusCode`
+- v1.1.0
+    - Added `getCodeFromMessage`
+    - Added `setStatusCode`
+    - Added `setMessage`
+    - Added `setClassification`
+    - Added tests
+    - Edited constructor
+- v1.0.3, v1.0.5, v1.0.6, v1.0.7
+    - `.git`, `.npm` issues
+- v1.0.4
+    - patch edits adding `Symbol` for fine grain handling
+- v1.0.2
+    - fixed `instanceof`
+- v1.0.1
+    - fixed potential cyclic `Response`
+- v1.0.0
+    - Added tests and fixed metadata fill in

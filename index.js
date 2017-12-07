@@ -35,6 +35,11 @@ class Response
                 100: 'Continue',
                 101: 'Switching Protocols',
                 102: 'Processing',
+                110: 'Response is Stale',
+                111: 'Revalidation Failed',
+                112: 'Disconnected Operation',
+                113: 'Heuristic Expiration',
+                199: 'Miscellaneous Warning',
                 200: 'OK',
                 201: 'Created',
                 202: 'Accepted',
@@ -44,7 +49,9 @@ class Response
                 206: 'Partial Content',
                 207: 'Multi-Status',
                 208: 'Already Reported',
+                214: 'Transformation Applied',
                 226: 'IM Used',
+                299: 'Miscellaneous Persistent Warning',
                 300: 'Multiple Choices',
                 301: 'Moved Permanently',
                 302: 'Found',
@@ -186,9 +193,9 @@ class Response
         this.statusCode = code;
         
         if( this.isHTTPCode( code ) ) {
-            this.message    = this.statusText( code );
+            this.message = this.statusText( code );
         } else {
-            this.message    = message;
+            this.message = message;
         }
         
         this.setClassification( code );
@@ -201,7 +208,7 @@ class Response
     
     setMessage( message, code )
     {
-        code = this.getCodeFromMessage( message ) || code;
+        code            = this.getCodeFromMessage( message ) || code;
         this.statusCode = code;
         this.message    = message;
         this.setClassification( code );
