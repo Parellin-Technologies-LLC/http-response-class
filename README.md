@@ -100,6 +100,10 @@ Parameters:
 
 CHANGELOG:
 
+- v1.1.5
+    - Added support for [103 - RFC8297 Section 2](https://tools.ietf.org/html/rfc8297#section-2)
+    - Added legacy support for [306 - RFC7231 Section 6.4.6](https://tools.ietf.org/html/rfc7231#section-6.4.6) for old ASP.NET platforms
+
 - v1.1.4
     - Added RFC7234 Warning codes:
         - [110 - RFC7234 Section 5.5.1](https://tools.ietf.org/html/rfc7234#section-5.5.1)
