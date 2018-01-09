@@ -5,27 +5,27 @@
  *******************************************************************************************************/
 'use strict';
 
-// @formatter:off
-
 class Response
 {
     constructor( statusCode, data, origin, ...metadata )
     {
-        if( statusCode instanceof Response )
+        if( statusCode instanceof Response ) {
             return statusCode;
-        else if( data instanceof Response )
+        } else if( data instanceof Response ) {
             return data;
-        else if( origin instanceof Response )
+        } else if( origin instanceof Response ) {
             return origin;
-        else if( metadata instanceof Response || metadata[ 0 ] instanceof Response )
+        } else if( metadata instanceof Response || metadata[ 0 ] instanceof Response ) {
             return metadata[ 0 ] || metadata;
+        }
         
-        if( statusCode && ( typeof statusCode !== 'number' || statusCode !== +statusCode ) )
+        if( statusCode && ( typeof statusCode !== 'number' || statusCode !== +statusCode ) ) {
             throw 'Argument Error - [statusCode] must be typeof number.';
-        else if( statusCode && !this.isHTTPCode( statusCode ) )
+        } else if( statusCode && !this.isHTTPCode( statusCode ) ) {
             throw 'Argument Error - [statusCode] must be valid HTTP code';
-        else
+        } else {
             this.setClassification( statusCode );
+        }
         
         Object.defineProperty( this, 'codes', {
             enumerable: false,
@@ -35,6 +35,7 @@ class Response
                 100: 'Continue',
                 101: 'Switching Protocols',
                 102: 'Processing',
+                103: 'Early Hints',
                 110: 'Response is Stale',
                 111: 'Revalidation Failed',
                 112: 'Disconnected Operation',
@@ -58,6 +59,7 @@ class Response
                 303: 'See Other',
                 304: 'Not Modified',
                 305: 'Use Proxy',
+                306: 'Switch Proxy',
                 307: 'Temporary Redirect',
                 308: 'Permanent Redirect',
                 400: 'Bad Request',
