@@ -100,7 +100,7 @@ Parameters:
 
 CHANGELOG:
 
-- v1.2.2
+- v1.2.1
     - Added `getMessageForCode`
     - Exposed `isInformational`, `isSuccess`, `isRedirection`, `isClientError`, `isServerError`, `isWarning`, and `isHTTPCode` as static functions
     - Exposed `codes` as statically accessible value
