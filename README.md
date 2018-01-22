@@ -100,6 +100,11 @@ Parameters:
 
 CHANGELOG:
 
+- v1.2.2
+    - Added `getMessageForCode`
+    - Exposed `isInformational`, `isSuccess`, `isRedirection`, `isClientError`, `isServerError`, `isWarning`, and `isHTTPCode` as static functions
+    - Exposed `codes` as statically accessible value
+
 - v1.1.5
     - Added support for [103 - RFC8297 Section 2](https://tools.ietf.org/html/rfc8297#section-2)
     - Added legacy support for [306 - RFC7231 Section 6.4.6](https://tools.ietf.org/html/rfc7231#section-6.4.6) for old ASP.NET platforms
