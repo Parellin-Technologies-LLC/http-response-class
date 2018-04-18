@@ -100,6 +100,10 @@ Parameters:
 
 CHANGELOG:
 
+- v1.2.2
+    - added linting
+    - changed `throw` to `throw new Error`
+
 - v1.2.1
     - Added `getMessageForCode`
     - Exposed `isInformational`, `isSuccess`, `isRedirection`, `isClientError`, `isServerError`, `isWarning`, and `isHTTPCode` as static functions
