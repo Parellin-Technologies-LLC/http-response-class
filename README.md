@@ -2,6 +2,10 @@
 
 Simple http response wrapper.
 
+[![NPM](https://nodei.co/npm/http-response-class.png?downloads=true&stars=true&downloadRank=true)](https://www.npmjs.com/package/http-response-class)
+
+### Installation
+
 `npm install http-response-class --save`
 
 Usage:
