@@ -18,7 +18,7 @@ class Response
 		} else if( metadata instanceof Response || metadata[ 0 ] instanceof Response ) {
 			return metadata[ 0 ] || metadata;
 		}
-  
+		
 		if( statusCode && ( typeof statusCode !== 'number' || statusCode !== +statusCode ) ) {
 			throw new Error( 'Argument Error - [statusCode] must be typeof number.' );
 		} else if( statusCode && !this.isHTTPCode( statusCode ) ) {
@@ -26,7 +26,7 @@ class Response
 		} else {
 			this.setClassification( statusCode );
 		}
-  
+		
 		Object.defineProperty( this, 'codes', {
 			enumerable: false,
 			configurable: false,
@@ -105,21 +105,21 @@ class Response
 				511: 'Network Authentication Required'
 			}
 		} );
-  
+		
 		Response.codes  = this.codes;
 		this.statusCode = statusCode;
 		this.data       = data;
 		this.message    = this.codes[ statusCode ];
-  
+		
 		if( origin ) {
 			this.origin = origin;
 		}
-  
+		
 		if( metadata.length ) {
 			this.metadata = metadata;
 		}
 	}
- 
+	
 	getCodeFromMessage( message )
 	{
 		for( const code in this.codes ) {
@@ -130,8 +130,8 @@ class Response
 			}
 		}
 	}
- 
-	getPacket()
+	
+	toJSON()
 	{
 		const
 			res = {
@@ -139,113 +139,113 @@ class Response
 				message: this.message,
 				data: this.data
 			};
-   
+		
 		if( this.origin ) {
 			res.origin = this.origin;
 		}
-  
+		
 		if( this.metadata ) {
 			res.metadata = this.metadata;
 		}
-  
+		
 		return res;
 	}
- 
+	
 	toString()
 	{
-		return JSON.stringify( this.getPacket() );
+		return JSON.stringify( this.toJSON() );
 	}
- 
+	
 	static isInformational( code )
 	{
 		return /^(10[0-3])$/.test( code );
 	}
- 
+	
 	isInformational( code )
 	{
 		return Response.isInformational( code || this.statusCode );
 	}
- 
+	
 	static isSuccess( code )
 	{
 		return /^(20[0-8]|226)$/.test( code );
 	}
- 
+	
 	isSuccess( code )
 	{
 		return Response.isSuccess( code || this.statusCode );
 	}
- 
+	
 	static isRedirection( code )
 	{
 		return /^(30[0-8])$/.test( code );
 	}
- 
+	
 	isRedirection( code )
 	{
 		return Response.isRedirection( code || this.statusCode );
 	}
- 
+	
 	static isClientError( code )
 	{
 		return /^(40[0-9]|41[0-8]|42[1-6,8,9]|431|451)$/.test( code );
 	}
- 
+	
 	isClientError( code )
 	{
 		return Response.isClientError( code || this.statusCode );
 	}
- 
+	
 	static isServerError( code )
 	{
 		return /^(50[0-9]|51[0,1])$/.test( code );
 	}
- 
+	
 	isServerError( code )
 	{
 		return Response.isServerError( code || this.statusCode );
 	}
- 
+	
 	static isWarning( code )
 	{
 		return /^(11[0-3])|199|214|299$/.test( code );
 	}
- 
+	
 	isWarning( code )
 	{
 		return Response.isWarning( code || this.statusCode );
 	}
- 
+	
 	static isHTTPCode( code )
 	{
 		return /^(1[0-1][0-3]|199)|(20[0-8]|214|226|299)|(30[0-8])|(40[0-9]|41[0-8]|42[1-6,8,9]|431|451)|(50[0-9]|51[0,1])$$/.test( code );
 	}
- 
+	
 	isHTTPCode( code )
 	{
 		return Response.isHTTPCode( code || this.statusCode );
 	}
- 
+	
 	getClassification()
 	{
 		return this.classification;
 	}
- 
+	
 	getStatusCode()
 	{
 		return this.statusCode;
 	}
- 
+	
 	getMessage()
 	{
 		return this.message;
 	}
- 
+	
 	getData()
 	{
 		return this.data;
 	}
- 
+	
 	setClassification( code )
 	{
 		if( this.isInformational( code ) ) {
@@ -264,20 +264,20 @@ class Response
 			this.classification = 'Unknown';
 		}
 	}
- 
+	
 	setStatusCode( code, message = 'Unknown' )
 	{
 		this.statusCode = code;
-  
+		
 		if( this.isHTTPCode( code ) ) {
 			this.message = this.statusText( code );
 		} else {
 			this.message = message;
 		}
-  
+		
 		this.setClassification( code );
 	}
- 
+	
 	setMessage( message, code )
 	{
 		code            = this.getCodeFromMessage( message ) || code;
@@ -285,33 +285,33 @@ class Response
 		this.message    = message;
 		this.setClassification( code );
 	}
- 
+	
 	static getMessageForCode( code )
 	{
 		return Response.isHTTPCode( code ) ? Response.codes[ code ] : 'Unknown';
 	}
- 
+	
 	getMessageForCode( code )
 	{
 		return Response.getMessageForCode( code || this.statusCode );
 	}
- 
+	
 	statusText( code )
 	{
 		return this.getMessageForCode( code ) || this.message;
 	}
- 
+	
 	get [ Symbol.toStringTag ]()
 	{
 		return this.constructor.name || 'Response';
 	}
- 
+	
 	static [ Symbol.hasInstance ]( obj )
 	{
 		return obj ? (
 			obj.hasOwnProperty( 'statusCode' ) &&
-            obj.hasOwnProperty( 'message' ) &&
-            obj.hasOwnProperty( 'data' )
+			obj.hasOwnProperty( 'message' ) &&
+			obj.hasOwnProperty( 'data' )
 		) : false;
 	}
 }

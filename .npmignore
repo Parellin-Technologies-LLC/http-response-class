@@ -1,7 +1,4 @@
-/test
-test/
 .git
 .idea
 .editorconfig
-.jshintrc
-.npmrc
+.eslintrc
