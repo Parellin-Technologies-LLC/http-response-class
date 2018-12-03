@@ -136,7 +136,7 @@ describe( 'Response [http-response-class]', () => {
 	
 	it( `[successful.setMessage]        should set statusCode to 425`,
 		() => {
-			successful.setMessage( 'Unordered Collection' );
+			successful.setMessage( 'Too Early' );
 			expect( successful.statusCode ).to.eq( 425 );
 		}
 	);

@@ -81,7 +81,7 @@ Parameters:
 422: 'Unprocessable Entity'
 423: 'Locked'
 424: 'Failed Dependency'
-425: 'Unordered Collection'
+425: 'Too Early'
 426: 'Upgrade Required'
 428: 'Precondition Required'
 429: 'Too Many Requests'
@@ -103,6 +103,13 @@ Parameters:
 ```
 
 CHANGELOG:
+
+- v1.2.4
+	- Changed HTTP 425 from `Unordered Collection` (WebDAV method) to `Too Early` per new RFC article
+	- [425 - RFC8470 Section 5.2 Early Data](https://tools.ietf.org/html/rfc8470#section-5.2)
+
+- v1.2.3
+	- added `toJSON` method overrides
 
 - v1.2.2
     - added linting
