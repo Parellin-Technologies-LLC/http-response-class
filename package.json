@@ -21,15 +21,15 @@
         "class",
         "express"
     ],
-    "author": "Parellin Technologies LLC  (https://parellin.com)",
+    "author": "Parellin Technologies LLC (https://parellin.com)",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/Parellin-Technologies-LLC/http-response-class/issues"
     },
     "homepage": "https://github.com/Parellin-Technologies-LLC/http-response-class#readme",
     "devDependencies": {
-        "chai": "^4.1.2",
+        "chai": "4.2.0",
         "eslint": "4.19.1",
-        "mocha": "^4.0.1"
+        "mocha": "4.1.0"
     }
 }
